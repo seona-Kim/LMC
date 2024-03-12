@@ -1,0 +1,7 @@
+INDEX VERSION 1.4+C:\SemiProjectKongU2\.metadata\.plugins\org.eclipse.wst.jsdt.core\indexes
+3564226877.index
+3821616766.index
+3894035785.index
+3956316255.index
+3365376707.index
+2394822466.index

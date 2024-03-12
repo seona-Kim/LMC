@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Delete resource &apos;LMC_Project/src/main/java/com/lmc/message/controller/MessageDeleteController.java&apos;" deleteContents="false" description="Delete resource &apos;LMC_Project/src/main/java/com/lmc/message/controller/MessageDeleteController.java&apos;" element1="/LMC_Project/src/main/java/com/lmc/message/controller/MessageDeleteController.java" flags="7" id="org.eclipse.ltk.core.refactoring.delete.resources" resources="1" stamp="1698045529489"/>
+</session>

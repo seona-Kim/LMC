@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		  FROM DIRECT_MESSAGE
+		 WHERE STATUS = 'Y'
+	</entry>
+
+	<entry key="selectReciveList">
+		SELECT DM_NO, DM_CONTENT, MEMBER_NICK, DM_SEND_DATE
+		  FROM DIRECT_MESSAGE D
+		  JOIN MEMBER ON (DM_SEND_MEMBER = MEMBER_NO)
+		 WHERE D.STATUS = 'Y'
+		   AND DM_RECIVE_MEMBER = ?
+		 ORDER BY DM_SEND_DATE DESC
+		 
+		 
+	</entry>
+	
+	<entry key="selectSendList">
+		SELECT DM_NO, DM_CONTENT, MEMBER_NICK, DM_SEND_DATE
+		  FROM DIRECT_MESSAGE D
+		  JOIN MEMBER ON (DM_RECIVE_MEMBER = MEMBER_NO)
+		 WHERE DM_SEND_MEMBER = ?
+		 ORDER BY DM_SEND_DATE DESC
+	</entry>
+	
+	<entry key="insertMessage">
+		INSERT INTO DIRECT_MESSAGE(DM_NO
+		                         , DM_CONTENT
+		                         , DM_SEND_MEMBER
+		                         , DM_RECIVE_MEMBER)
+		                    VALUES(SEQ_DNO.NEXTVAL
+		                         , ?
+		          	             , ?
+		                         , ?)
+	</entry>
+	
+	<entry key="selectMessage">
+		SELECT DM_NO
+			 , MEMBER_IMG 
+		     , MEMBER_NICK
+		     , DM_CONTENT
+		     , DM_SEND_DATE
+		  FROM DIRECT_MESSAGE D
+		  JOIN MEMBER M ON (MEMBER_NO = DM_SEND_MEMBER)
+		 WHERE DM_NO = ?
+		   AND D.STATUS = 'Y'
+		 ORDER BY DM_SEND_DATE DESC
+	</entry>
+	
+	<entry key="selectProfile">
+		SELECT *
+        FROM BOARD
+        JOIN MEMBER ON  (BOARD_WRITER = MEMBER_NO)
+        WHERE BOARD_NO = ? 
+	</entry>
+	
+	
+	
+</properties>

@@ -1,0 +1,495 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT
+		  FROM BOARD
+		 WHERE STATUS = 'Y'
+	</entry>
+	
+	<entry key="searchListView">
+		  SELECT *
+		  FROM (
+		    SELECT ROWNUM RNUM, A.*
+		      FROM (
+		        SELECT BOARD_NO
+		             , BOARD_TITLE
+		             , MEMBER_ID
+                     , CREATE_DATE
+		             , VIEWS
+		          FROM BOARD B
+		          JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+		         WHERE B.STATUS = 'Y'
+                 AND BOARD_TITLE LIKE ?
+		         ORDER BY CREATE_DATE DESC
+		      ) A
+		  )
+		 WHERE RNUM BETWEEN ? AND ?		
+	</entry>
+	
+	<entry key="searchListCount">
+		SELECT COUNT(*) COUNT
+		  FROM BOARD
+		 WHERE STATUS = 'Y'
+		 AND BOARD_TITLE LIKE ? 
+	</entry>
+
+	<entry key="increaseCount">
+		UPDATE BOARD
+		   SET VIEWS = VIEWS + 1
+		 WHERE BOARD_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+
+	<entry key="selectBoard">
+		SELECT BOARD_NO
+		     , CATEGORY_NAME
+		     , BOARD_TITLE
+		     , BOARD_CONTENT
+		     , MEMBER_ID
+		     , VIEWS
+		     , CREATE_DATE
+		  FROM BOARD B
+		 LEFT JOIN CATEGORY USING (CATEGORY_NO)
+		  JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+		 WHERE BOARD_NO = ?
+		   AND B.STATUS = 'Y'
+	</entry>
+
+	<entry key="selectAttachment">
+		SELECT FILE_NO
+		     , ORIGIN_NAME
+		     , CHANGE_NAME
+		     , FILE_PATH
+		  FROM ATTACHMENT
+		 WHERE REF_BNO = ?
+	</entry>
+	
+	<entry key="selectProfile">
+		SELECT *
+        FROM BOARD
+        JOIN MEMBER ON  (BOARD_WRITER = MEMBER_NO)
+        WHERE  BOARD_NO = ? 
+	</entry>
+
+	<entry key="selectList">
+		 SELECT *
+		   FROM (SELECT ROWNUM RNUM, A.*
+		           FROM (SELECT BOARD_NO
+		                      , CATEGORY_NO
+		                      , BOARD_TITLE
+		                      , BOARD_CONTENT
+		                      , MEMBER_NICK
+		                      , VIEWS
+		                      , CREATE_DATE
+		                      , UPDATE_DATE
+		                   FROM BOARD B
+		                   JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+		                  WHERE B.STATUS = 'Y'
+		                  ORDER BY B.BOARD_NO DESC) A
+		                 )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+		
+	<entry key="selectMyListCount">
+		SELECT COUNT(*) COUNT
+		  FROM BOARD
+		 WHERE BOARD_WRITER = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectMyList">
+		 SELECT *
+		   FROM (SELECT ROWNUM RNUM, A.*
+		           FROM (SELECT BOARD_NO
+		                      , CATEGORY_NO
+		                      , BOARD_TITLE
+		                      , BOARD_CONTENT
+		                      , MEMBER_NICK
+		                      , VIEWS
+		                      , CREATE_DATE
+		                      , UPDATE_DATE
+		                   FROM BOARD B
+		                   JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+		                  WHERE B.STATUS = 'Y'
+		                    AND BOARD_WRITER = ?
+		                  ORDER BY B.BOARD_NO DESC) A
+		                 )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectMyReplyCount">
+		SELECT COUNT(*) COUNT
+		  FROM REPLY
+		 WHERE REPLY_WRITER = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectMyReplyList">
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		          FROM (SELECT REPLY_NO
+		                     , REPLY_CONTENT
+		                     , REF_BNO
+		                     , BOARD_TITLE "REF_BTITLE"
+		                     , REPLY_WRITER
+		                     , R.CREATE_DATE
+		                     , R.UPDATE_DATE
+		                  FROM REPLY R
+		                  JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+		                  JOIN BOARD ON (BOARD_NO = REF_BNO)
+		                 WHERE R.STATUS = 'Y'
+		                   AND REPLY_WRITER = ?
+		                 ORDER BY R.REPLY_NO DESC) A
+		                )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="todayBoardWriteCount">
+    SELECT COUNT(*) COUNT 
+      FROM BOARD
+     WHERE CREATE_DATE BETWEEN TO_CHAR(sysdate, 'YYYY-MM-DD') AND SYSDATE
+	</entry>
+	
+	<entry key="todayfreeBoardCount">
+	 SELECT COUNT(*) COUNT 
+       FROM BOARD
+      WHERE CREATE_DATE BETWEEN TO_CHAR(sysdate, 'YYYY-MM-DD') AND SYSDATE
+	    AND CATEGORY_NO = 10
+	</entry>
+	
+	<entry key="todayShareBoardCount">
+	SELECT COUNT(*) COUNT 
+      FROM BOARD
+     WHERE CREATE_DATE BETWEEN TO_CHAR(sysdate, 'YYYY-MM-DD') AND SYSDATE
+       AND CATEGORY_NO = 20
+	</entry>
+	
+	<entry key="movieInfoBoardCount">
+	SELECT COUNT(*) COUNT 
+      FROM BOARD
+     WHERE CREATE_DATE BETWEEN TO_CHAR(sysdate, 'YYYY-MM-DD') AND SYSDATE
+       AND CATEGORY_NO = 30
+	</entry>
+	
+	<entry key="todayNoticeBoardCount">
+	SELECT COUNT(*) COUNT 
+      FROM NOTICE
+     WHERE CREATE_DATE BETWEEN TO_CHAR(sysdate, 'YYYY-MM-DD') AND SYSDATE
+	</entry>
+	
+	<entry key="freeBoard">
+	SELECT COUNT(*) COUNT
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	   AND CATEGORY_NO = 10
+	</entry>
+	
+	<entry key="shareBoard">
+	SELECT COUNT(*) COUNT
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	   AND CATEGORY_NO = 20
+	</entry>
+	
+	<entry key="movieInfoBoard">
+	SELECT COUNT(*) COUNT
+	  FROM BOARD
+	 WHERE STATUS = 'Y'
+	   AND CATEGORY_NO = 30
+	</entry>
+	
+	<entry key="noticeBoard">
+	SELECT COUNT(*) COUNT
+	  FROM NOTICE
+	 WHERE STATUS = 'Y'
+	</entry>
+	
+	<entry key="bestBoardList">
+		SELECT ROWNUM, R.*
+		  FROM (SELECT *
+		          FROM (SELECT COMMEND_BNO
+		                     , COUNT(COMMEND_MNO) COMMEND_COUNT
+		                  FROM COMMEND
+		                 GROUP BY COMMEND_BNO
+		                 ORDER BY COUNT(COMMEND_MNO) DESC) C
+		         JOIN BOARD ON (COMMEND_BNO = BOARD_NO)
+		         WHERE CATEGORY_NO = ?
+		         ORDER BY COMMEND_COUNT DESC) R 
+		 WHERE ROWNUM &lt;= ?
+	</entry>
+	
+	
+	<entry key="selectMyCommendCount">
+		SELECT COUNT(*) COUNT
+		  FROM COMMEND
+		 WHERE COMMEND_MNO = ?
+	</entry>
+	
+	<entry key="selectMyCommend">
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		          FROM (SELECT COMMEND_NO
+		          			 , COMMEND_BNO
+		                     , CATEGORY_NO
+		                     , BOARD_TITLE
+		                     , MEMBER_NICK
+		                     , VIEWS
+		                     , B.CREATE_DATE
+		                  FROM COMMEND C
+		                  JOIN BOARD B ON (COMMEND_BNO = BOARD_NO)
+		                  JOIN MEMBER M ON (COMMEND_MNO = MEMBER_NO)
+		                 WHERE B.STATUS = 'Y'
+		                   AND COMMEND_MNO = ?
+		                 ORDER BY B.CREATE_DATE DESC) A
+		                 )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="selectCategoryList">
+		SELECT CATEGORY_NO
+		     , CATEGORY_NAME
+		  FROM CATEGORY
+	</entry>
+	
+	<entry key="deleteBoard">
+		UPDATE BOARD
+		   SET STATUS = 'N'
+		 WHERE BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateBoard">
+		UPDATE BOARD
+		   SET CATEGORY_NO = ?
+		     , BOARD_TITLE = ?
+		     , BOARD_CONTENT = ?
+		 WHERE BOARD_NO = ?
+	</entry>
+	
+	<entry key="updateAttachment">
+		UPDATE ATTACHMENT
+		   SET ORIGIN_NAME = ?
+		     , CHANGE_NAME = ?
+		     , FILE_PATH = ?
+		     , UPLOAD_DATE = SYSDATE
+		 WHERE FILE_NO = ?
+	</entry>
+	
+	<entry key="insertNewAttachment">
+		INSERT INTO ATTACHMENT(FILE_NO
+		                     , REF_BNO
+		                     , ORIGIN_NAME
+		                     , CHANGE_NAME
+		                     , FILE_PATH) 
+		                VALUES(SEQ_FNO.NEXTVAL
+		                     , ?
+		                     , ?
+		                     , ?
+		                     , ?)
+	</entry>
+	
+	<entry key="selectCategoryListCount">
+		SELECT COUNT(*) COUNT
+		  FROM BOARD
+		 WHERE CATEGORY_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectCategoryBoardList">
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*, COMMEND_COUNT
+		          FROM (SELECT BOARD_NO
+		                     , CATEGORY_NO
+		                     , BOARD_TITLE
+		                     , BOARD_CONTENT
+		                     , MEMBER_NICK
+		                     , VIEWS
+		                     , CREATE_DATE
+		                     , UPDATE_DATE
+		                  FROM BOARD B
+		                  JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+		                 WHERE CATEGORY_NO = ?
+		                   AND B.STATUS = 'Y'
+		                 ORDER BY B.BOARD_NO DESC) A
+		          LEFT JOIN (SELECT COMMEND_BNO
+		                     , COUNT(COMMEND_MNO) COMMEND_COUNT
+		                  FROM COMMEND
+		                 GROUP BY COMMEND_BNO) ON (COMMEND_BNO = BOARD_NO))
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="searchCategoryName">
+		SELECT CATEGORY_NAME
+		  FROM CATEGORY
+		 WHERE CATEGORY_NO = ?
+	</entry>
+	
+	<entry key="insertBoard">
+		INSERT INTO BOARD(BOARD_NO
+		                , CATEGORY_NO
+		                , BOARD_TITLE
+		                , BOARD_CONTENT
+		                , BOARD_WRITER)
+		           VALUES(SEQ_BNO.NEXTVAL
+		                , ?
+		                , ?
+		                , ?
+		                , ?)
+	</entry>
+	
+	<entry key="insertAttachment">
+		INSERT INTO ATTACHMENT(FILE_NO
+		                     , REF_BNO
+		                     , ORIGIN_NAME
+		                     , CHANGE_NAME
+		                     , FILE_PATH) 
+		                VALUES(SEQ_FNO.NEXTVAL
+		                     , SEQ_BNO.CURRVAL
+		                     , ?
+		                     , ?
+		                     , ?)
+	</entry>
+	
+	<entry key="selectcommnedCount">
+		SELECT COUNT(COMMEND_MNO) COUNT
+		FROM COMMEND
+		WHERE COMMEND_BNO = ?
+		AND COMMEND_MNO = ?
+	</entry>
+	
+	
+	<entry key="selectBoardCommend">
+	 SELECT COUNT(COMMEND_MNO) COUNT
+		FROM COMMEND
+		WHERE COMMEND_BNO = ?
+	</entry>
+	
+
+	
+	<entry key="intsertCommend">
+	INSERT INTO COMMEND(COMMEND_NO
+		                     , COMMEND_BNO
+		                     , COMMEND_MNO
+                                ) 
+		                VALUES(SEQ_CNO.NEXTVAL
+		                     , ?
+		                     , ?
+                             )
+	</entry>
+	
+	<entry key="deleteCommend">
+	DELETE 
+	FROM COMMEND
+	WHERE COMMEND_BNO = ?
+	AND COMMEND_MNO = ?
+	</entry>
+	
+	<entry key="CountCommend">
+		SELECT COUNT(*) COUNT
+		FROM COMMEND
+		WHERE COMMEND_BNO = ?
+	</entry>
+	
+	<entry key="insertReply">
+	INSERT INTO REPLY(REPLY_NO
+                            , REPLY_CONTENT
+                            , REF_BNO
+                            , REPLY_WRITER)
+                VALUES(SEQ_RNO.NEXTVAL
+                            ,  ?
+                            ,  ?
+                            ,  ?)
+	</entry>
+	
+	<entry key="selectReplyList">
+		SELECT REPLY_NO
+	        ,  REPLY_CONTENT
+	        ,  MEMBER_NICK
+	        ,  CREATE_DATE
+	        ,  MEMBER_IMG	
+			FROM REPLY R
+		    JOIN MEMBER ON (REPLY_WRITER = MEMBER_NO)
+		WHERE R.STATUS = 'Y'
+		    AND REF_BNO = ?
+			ORDER BY REPLY_NO DESC
+	</entry>
+	
+	<entry key="selectList_Admin">
+	 SELECT *
+	   FROM (SELECT ROWNUM RNUM, A.*
+	           FROM (SELECT BOARD_NO
+	                      , CATEGORY_NO
+	                      , BOARD_TITLE
+	                      , BOARD_CONTENT
+	                      , MEMBER_NICK
+	                      , VIEWS
+	                      , CREATE_DATE
+	                      , UPDATE_DATE
+	                      , B.STATUS
+	                   FROM BOARD B
+	                   JOIN MEMBER ON (BOARD_WRITER = MEMBER_NO)
+	                  ORDER BY B.CREATE_DATE DESC) A
+	                 )
+	 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="searchAllBoardListCount">
+	
+		SELECT COUNT(*) COUNT
+			  FROM (SELECT BOARD_NO
+			  			 , CATEGORY_NO
+	                     , BOARD_TITLE	                    
+	                     , BOARD_CONTENT
+	                     , BOARD_WRITER
+	                     , VIEWS
+	                     , CREATE_DATE
+	                     , UPDATE_DATE
+	                     , STATUS
+	                  FROM BOARD B
+	                 WHERE BOARD_NO LIKE ?
+	                    OR BOARD_TITLE LIKE ?
+	                    OR BOARD_CONTENT LIKE ?
+	                    OR BOARD_WRITER LIKE ?
+	                 ORDER BY BOARD_NO) A 
+	</entry>
+	
+	<entry key="searchAllBoardList">
+	
+		SELECT *
+			  FROM (SELECT ROWNUM RNUM, A.*
+			  		  FROM (SELECT BOARD_NO
+			  			 , CATEGORY_NO
+	                     , BOARD_TITLE	                    
+	                     , BOARD_CONTENT
+	                     , BOARD_WRITER
+	                     , VIEWS
+	                     , CREATE_DATE
+	                     , UPDATE_DATE
+	                     , STATUS
+	                  FROM BOARD B
+	                 WHERE BOARD_NO LIKE ?
+	                    OR BOARD_TITLE LIKE ?
+	                    OR BOARD_CONTENT LIKE ?
+	                    OR BOARD_WRITER LIKE ?
+	                 ORDER BY BOARD_NO) A  
+			  		)
+			 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	<entry key="selectBoardReplyCount">
+		SELECT COUNT(*) COUNT
+		  FROM REPLY
+		 WHERE REF_BNO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="deleteReply">
+		UPDATE REPLY
+		   SET STATUS = 'N'
+		 WHERE REPLY_NO = ?
+	
+	</entry>
+	
+</properties>

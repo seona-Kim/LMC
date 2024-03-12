@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectListCount">
+	
+	SELECT COUNT(*) COUNT
+	  FROM MOVIE_INFO
+	 WHERE STATUS = 'Y'
+	
+	</entry>
+	
+	<entry key="selectList">
+	
+	SELECT *
+	  FROM (SELECT ROWNUM RNUM, A.*
+	          FROM (SELECT MOVIE_NO
+	                     , MOVIE_NAME
+	                     , MOVIE_CONTENT
+	                     , MOVIE_CONTENT2
+	                     , MOVIE_IMG
+	                     , STATUS
+	                  FROM MOVIE_INFO M
+	                 WHERE M.STATUS = 'Y'
+	                 ORDER BY MOVIE_NO DESC) A
+	                  )
+	 WHERE RNUM BETWEEN ? AND ?
+
+	</entry>
+	
+	<entry key="insertMovieBoard">
+		INSERT INTO MOVIE_INFO(MOVIE_NO
+		                 , MOVIE_NAME
+		                 , MOVIE_CONTENT
+		                 , MOVIE_CONTENT2
+		                 , MOVIE_IMG
+		                 , STATUS)
+		            VALUES(SEQ_MVNO.NEXTVAL
+		                 , ?
+		                 , ?
+		                 , ?
+		                 , ?
+		                 , default)
+	</entry>
+	
+	<entry key="selectMovieimgList">
+			SELECT *
+			FROM MOVIE_INFO	
+					
+	</entry>
+	
+	<entry key="selectAttachment">
+		SELECT *
+		FROM MOVIE_INFO
+		
+		
+	</entry>
+	
+	<entry key="selectBoard">
+	
+	SELECT *
+		FROM MOVIE_INFO
+		WHERE MOVIE_NO = ?
+		
+		
+		</entry>
+
+</properties>

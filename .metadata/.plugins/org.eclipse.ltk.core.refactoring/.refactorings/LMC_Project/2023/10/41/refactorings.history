@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LMC_Project/src/main/webapp/views/common/lmc_menubar.jsp&apos; to &apos;menubar.jsp&apos;" description="Rename resource &apos;lmc_menubar.jsp&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/webapp/views/common/lmc_menubar.jsp" name="menubar.jsp" stamp="1696989817226" updateReferences="true"/>
+</session>

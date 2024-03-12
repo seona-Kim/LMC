@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;LMC_Project/src/main/java/com/lmc/message/controller/MessageEnrollForm.java&apos; to &apos;MessageEnrollFormController.java&apos;" description="Rename resource &apos;MessageEnrollForm.java&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="src/main/java/com/lmc/message/controller/MessageEnrollForm.java" name="MessageEnrollFormController.java" stamp="1697516268546" updateReferences="true"/>
+</session>

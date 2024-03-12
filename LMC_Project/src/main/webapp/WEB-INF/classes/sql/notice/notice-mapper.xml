@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="selectListCount">
+	SELECT COUNT(*) COUNT
+	  FROM NOTICE
+	 WHERE STATUS = 'Y'
+	</entry>
+
+	<entry key="selectList">
+	SELECT *
+	  FROM (SELECT ROWNUM RNUM, A.*
+	          FROM (SELECT NOTICE_NO
+	                     , NOTICE_TITLE
+	                     , NOTICE_CONTENT
+	                     , VIEWS
+	                     , CREATE_DATE
+	                  FROM NOTICE N
+	                 WHERE N.STATUS = 'Y'
+	                 ORDER BY NOTICE_NO DESC) A
+	                )
+	WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="insertNotice">
+	INSERT INTO NOTICE(NOTICE_NO
+					 , NOTICE_TITLE
+					 , NOTICE_CONTENT
+					 , VIEWS
+					 , CREATE_DATE
+					 , STATUS)
+				VALUES(SEQ_NNO.NEXTVAL
+					 , ?
+					 , ?
+					 , DEFAULT
+					 , DEFAULT
+					 , DEFAULT)
+	</entry>
+	
+	<entry key="increaseCount">
+		UPDATE NOTICE
+		   SET VIEWS = VIEWS + 1
+		 WHERE NOTICE_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="selectNotice">
+		SELECT NOTICE_NO
+		     , NOTICE_TITLE
+		     , NOTICE_CONTENT
+		     , VIEWS
+		     , CREATE_DATE
+		  FROM NOTICE 
+		 WHERE NOTICE_NO = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="closeNoticeList">
+		SELECT ROWNUM, C.* 
+		  FROM (SELECT NOTICE_NO
+		             , NOTICE_TITLE
+		             , NOTICE_CONTENT
+		             , VIEWS
+		             , CREATE_DATE
+		          FROM NOTICE 
+		         WHERE STATUS = 'Y'
+		         ORDER BY NOTICE_NO DESC) C
+		 WHERE ROWNUM &lt;= ? 
+	</entry>
+
+</properties>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<qualifiedTypeNameHistroy>
+    <fullyQualifiedTypeName name="com.lmc.board.model.vo.Board"/>
+    <fullyQualifiedTypeName name="java.lang.Integer"/>
+    <fullyQualifiedTypeName name="com.lmc.message.model.vo.Message"/>
+    <fullyQualifiedTypeName name="com.lmc.member.model.vo.Member"/>
+</qualifiedTypeNameHistroy>

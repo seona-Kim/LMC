@@ -1,0 +1,352 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+<properties>
+
+	<entry key="insertMember">
+		INSERT INTO MEMBER(MEMBER_NO
+		                 , MEMBER_ID
+		                 , MEMBER_PWD
+		                 , MEMBER_NAME
+		                 , MEMBER_NICK
+		                 , EMAIL
+		                 , ENROLL_DATE)
+		            VALUES(SEQ_MNO.NEXTVAL
+		                 , ?
+		                 , ?
+		                 , ?
+		                 , ?
+		                 , ?
+		                 , SYSDATE)
+
+	</entry>
+	
+	<entry key="loginMember">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="updateMember">
+		UPDATE MEMBER
+		   SET MEMBER_NAME = ?
+		     , MEMBER_NICK = ?
+		     , EMAIL = ?
+		     , MEMBER_IMG = ?
+		 WHERE MEMBER_ID = ?
+	</entry>
+
+	<entry key="selectMember">
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEMBER_ID = ?
+		   AND STATUS = 'Y'
+	</entry>
+	
+	<entry key="updatePwdMember">
+		UPDATE MEMBER
+		   SET MEMBER_PWD = ?
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+	</entry>
+	
+	<entry key="selectListCount">
+		SELECT COUNT(*) COUNT 
+		  FROM MEMBER
+		 WHERE STATUS = 'Y' 
+	</entry>
+
+	<entry key="selectList">
+	
+		SELECT *
+	      FROM (SELECT ROWNUM RNUM, A.*
+	              FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_PWD
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 ORDER BY MEMBER_NO ASC) A
+		       )
+		 WHERE RNUM BETWEEN ? AND ?
+	</entry>
+	
+	<entry key="deleteMember">
+		UPDATE MEMBER
+		   SET STATUS = 'N'
+		 WHERE MEMBER_ID = ?
+		   AND MEMBER_PWD = ?
+	</entry>
+	
+	<entry key="adSelectMember">
+	
+		SELECT *
+		  FROM MEMBER
+		 WHERE MEMBER_NO = ?
+		   AND STATUS = 'Y'
+	
+	</entry>
+	
+	<entry key="searchAllMemberListCount">
+		SELECT COUNT(*) COUNT
+		  FROM (SELECT MEMBER_NO
+                     , MEMBER_ID
+                     , MEMBER_NAME
+                     , MEMBER_NICK
+                     , EMAIL
+                     , ENROLL_DATE
+                     , MEMBER_IMG
+                     , STATUS
+                  FROM MEMBER M
+                 WHERE MEMBER_NO LIKE ?
+                    OR MEMBER_ID LIKE ?
+                    OR MEMBER_NAME LIKE ?
+                    OR MEMBER_NICK LIKE ?
+                    OR EMAIL LIKE ?
+                 ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	<entry key="search_MemberNo_Count">
+	SELECT COUNT(*) COUNT
+	  FROM (SELECT MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_NAME
+                    , MEMBER_NICK
+                    , EMAIL
+                    , ENROLL_DATE
+                    , MEMBER_IMG
+                    , STATUS
+                 FROM MEMBER M
+                WHERE MEMBER_NO LIKE ?
+                ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	<entry key="search_MemberId_Count">
+	SELECT COUNT(*) COUNT
+	  FROM (SELECT MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_NAME
+                    , MEMBER_NICK
+                    , EMAIL
+                    , ENROLL_DATE
+                    , MEMBER_IMG
+                    , STATUS
+                 FROM MEMBER M
+                WHERE MEMBER_ID LIKE ?
+                ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	<entry key="search_MemberName_Count">
+	SELECT COUNT(*) COUNT
+	  FROM (SELECT MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_NAME
+                    , MEMBER_NICK
+                    , EMAIL
+                    , ENROLL_DATE
+                    , MEMBER_IMG
+                    , STATUS
+                 FROM MEMBER M
+                WHERE MEMBER_NAME LIKE ?
+                ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	<entry key="search_MemberNick_Count">
+	SELECT COUNT(*) COUNT
+	  FROM (SELECT MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_NAME
+                    , MEMBER_NICK
+                    , EMAIL
+                    , ENROLL_DATE
+                    , MEMBER_IMG
+                    , STATUS
+                 FROM MEMBER M
+                WHERE MEMBER_NICK LIKE ?
+                ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	<entry key="search_Email_Count">
+	SELECT COUNT(*) COUNT
+	  FROM (SELECT MEMBER_NO
+                    , MEMBER_ID
+                    , MEMBER_NAME
+                    , MEMBER_NICK
+                    , EMAIL
+                    , ENROLL_DATE
+                    , MEMBER_IMG
+                    , STATUS
+                 FROM MEMBER M
+                WHERE EMAIL LIKE ?
+                ORDER BY MEMBER_NO) A 
+	</entry>
+	
+	
+	<entry key="searchAllMemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE MEMBER_NO LIKE ?
+		                    OR MEMBER_ID LIKE ?
+		                    OR MEMBER_NAME LIKE ?
+		                    OR MEMBER_NICK LIKE ?
+		                    OR EMAIL LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	<entry key="search_MemberNo_MemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE MEMBER_NO LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	<entry key="search_MemberId_MemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE MEMBER_ID LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	
+	<entry key="search_MemberName_MemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE MEMBER_NAME LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	<entry key="search_MemberNick_MemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE MEMBER_NICK LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+		<entry key="search_Email_MemberList">
+	
+		SELECT *
+		  FROM (SELECT ROWNUM RNUM, A.*
+		  		  FROM (SELECT MEMBER_NO
+		                     , MEMBER_ID
+		                     , MEMBER_NAME
+		                     , MEMBER_NICK
+		                     , EMAIL
+		                     , ENROLL_DATE
+		                     , MEMBER_IMG
+		                     , STATUS
+		                  FROM MEMBER M
+		                 WHERE EMAIL LIKE ?
+                 ORDER BY MEMBER_NO) A 
+		  		)
+		 WHERE RNUM BETWEEN ? AND ?		
+	
+	</entry>
+	
+	<entry key="idPwdFindMember">
+		SELECT *
+		FROM MEMBER
+		WHERE EMAIL = ?
+	</entry>
+	
+	<entry key="memberStop">
+		UPDATE MEMBER
+		   SET STATUS = ?
+		 WHERE MEMBER_NO = ?
+	</entry>
+	
+	<entry key="duplicationCheck">
+		
+		SELECT MEMBER_NO
+		  FROM MEMBER
+		 WHERE MEMBER_ID = ?
+	
+	</entry>
+	
+	<entry key="duplicationCheckNick">
+		
+		SELECT COUNT(*) COUNT
+		  FROM MEMBER
+		 WHERE MEMBER_NICK = ?
+	
+	</entry>
+	
+		<entry key="duplicationCheckEmail">
+		
+		SELECT COUNT(*) COUNT
+		  FROM MEMBER
+		 WHERE EMAIL = ?
+	
+	</entry>
+	
+	
+</properties>
